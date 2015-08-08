@@ -22,6 +22,7 @@ class Sitemap(TemplateView):
 
     def get_context_data(self, **kwargs):
         ctx = super(Sitemap, self).get_context_data(**kwargs)
+
         items = [
             {
                 'loc': '',
@@ -54,10 +55,11 @@ class Index(TemplateView):
     '''
     Главная страница
     '''
+
     template_name = 'index.html'
     model = Issue
     context_object_name = 'index'
-    
+
     def get_context_data(self, **kwargs):
         context = super(Index, self).get_context_data(**kwargs)
         issue = False
@@ -67,6 +69,7 @@ class Index(TemplateView):
             pass
 
         items = []
+
         if issue:
             qs = issue.item_set.filter(status='active')
             items = qs.order_by('-section__priority', '-priority')
@@ -76,6 +79,7 @@ class Index(TemplateView):
             'items': items,
             'active_menu_item': 'home'
         })
+
         return context
 
 
@@ -88,7 +92,7 @@ class IssuesList(ListView):
     context_object_name = 'items'
     paginate_by = 9
     paginator_class = DiggPaginator
-    
+
     def get_context_data(self, **kwargs):
         context = super(IssuesList, self).get_context_data(**kwargs)
         context['active_menu_item'] = 'issues_list'
