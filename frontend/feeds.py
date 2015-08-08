@@ -11,7 +11,7 @@ class CommonFeed(Feed):
     """
     title = u"Дайджест новостей о python"
     link = "/"
-    description = u"""Рускоязычные анонсы свежих новостей о python и близлежащих технологиях."""
+    description = u"""Русскоязычные анонсы свежих новостей о python и близлежащих технологиях."""
 
     @staticmethod
     def items():
