@@ -1,5 +1,5 @@
 from django.test import TestCase
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.core.urlresolvers import reverse
 from django.utils import timezone
 
 from digest.models import Issue, Item, Section
@@ -95,7 +95,6 @@ class IndexViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['issue'], False)
 
-    # XXX bug - модель не требует поля image, а шаблон - да
     def test_context_var_issue_if_has_active_issues_without_published_at(self):
 
         issue = Issue.objects.create(title='Title 1', version=1, status='active')
@@ -106,7 +105,6 @@ class IndexViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['issue'], issue)
 
-    # XXX bug - модель не требует поля image, а шаблон - да
     def test_context_var_issue_if_has_active_issues_with_filled_published_at_field(self):
 
         date = timezone.now().date()
@@ -133,100 +131,100 @@ class IndexViewTest(TestCase):
         self.assertTemplateUsed(response, 'index.html')
 
 
-class SitemapTest():
+# class SitemapTest():
 
-    def setUp(self):
+#     def setUp(self):
 
-        self.url = reverse('frontend:sitemap')
+#         self.url = reverse('frontend:sitemap')
 
-    def test_template_used(self):
+#     def test_template_used(self):
 
-        response = self.client.get(self.url)
+#         response = self.client.get(self.url)
 
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'sitemap.html')
+#         self.assertEqual(response.status_code, 200)
+#         self.assertTemplateUsed(response, 'sitemap.html')
 
-    def test_content_type(self):
+#     def test_content_type(self):
 
-        response = self.client.get(self.url)
+#         response = self.client.get(self.url)
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.content_type, 'text/xml')
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(response.content_type, 'text/xml')
 
-    def test_context_var_domain(self):
+#     def test_context_var_domain(self):
 
-        response = self.client.get(self.url)
+#         response = self.client.get(self.url)
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(
-            response.context['domain'],
-            'http://%s' %
-            settings.BASE_DOMAIN)
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(
+#             response.context['domain'],
+#             'http://%s' %
+#             settings.BASE_DOMAIN)
 
-    def test_context_var_record_if_no_active_issues_exists(self):
+#     def test_context_var_record_if_no_active_issues_exists(self):
 
-        items = [
-            {
-                'loc': '',
-                'changefreq': 'weekly',
-            },
-            {
-                'loc': reverse('frontend:issues'),
-                'changefreq': 'weekly',
-            },
-            {
-                'loc': reverse('frontend:feed'),
-                'changefreq': 'daily',
-            },
-        ]
+#         items = [
+#             {
+#                 'loc': '',
+#                 'changefreq': 'weekly',
+#             },
+#             {
+#                 'loc': reverse('frontend:issues'),
+#                 'changefreq': 'weekly',
+#             },
+#             {
+#                 'loc': reverse('frontend:feed'),
+#                 'changefreq': 'daily',
+#             },
+#         ]
 
-        response = self.client.get(self.url)
+#         response = self.client.get(self.url)
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['records'], items)
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(response.context['records'], items)
 
-    def test_context_var_record_if_active_issues_exists(self):
+#     def test_context_var_record_if_active_issues_exists(self):
 
-        items = [
-            {
-                'loc': '',
-                'changefreq': 'weekly',
-            },
-            {
-                'loc': reverse('frontend:issues'),
-                'changefreq': 'weekly',
-            },
-            {
-                'loc': reverse('frontend:feed'),
-                'changefreq': 'daily',
-            },
-        ]
+#         items = [
+#             {
+#                 'loc': '',
+#                 'changefreq': 'weekly',
+#             },
+#             {
+#                 'loc': reverse('frontend:issues'),
+#                 'changefreq': 'weekly',
+#             },
+#             {
+#                 'loc': reverse('frontend:feed'),
+#                 'changefreq': 'daily',
+#             },
+#         ]
 
-        response = self.client.get(self.url)
+#         response = self.client.get(self.url)
 
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['records'], items)
-
-
-class IssuesListTest(TestCase):
-    pass
+#         self.assertEqual(response.status_code, 200)
+#         self.assertEqual(response.context['records'], items)
 
 
-class IssueViewTest(TestCase):
-    pass
+# class IssuesListTest(TestCase):
+#     pass
 
 
-class NewsListTest(TestCase):
-    pass
+# class IssueViewTest(TestCase):
+#     pass
 
 
-class AddNewsTest(TestCase):
-    pass
+# class NewsListTest(TestCase):
+#     pass
 
 
-class ViewEditorMaterialTest(TestCase):
-    pass
+# class AddNewsTest(TestCase):
+#     pass
 
 
-class ItemViewTest(TestCase):
-    pass
+# class ViewEditorMaterialTest(TestCase):
+#     pass
+
+
+# class ItemViewTest(TestCase):
+#     pass
